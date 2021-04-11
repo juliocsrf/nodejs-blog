@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const connection = require('./database/database');
 
+const categoriesController = require('./app/categories/CategoriesController');
+const articlesController = require('./app/articles/ArticlesController');
+
 app.set('view engine', 'ejs'); // View Engine
 
 app.use(express.static('public')); // Public Folder
@@ -18,8 +21,10 @@ connection
 		console.log(`Database error: ${error}`)
 	});
 
-//Routes
+app.use('/', categoriesController);
+app.use('/', articlesController);
 
+//Routes
 app.get('/', (req, res) => {
 	res.render('index');
 });
