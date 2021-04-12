@@ -6,7 +6,7 @@
 			<h2>Categorias</h2>
 			<hr>
 
-			<table class="table">
+			<table class="table table-bordered">
 				<thead>
 					<tr>
 						<th>ID</th>
@@ -15,6 +15,15 @@
 						<th>Ações</th>
 					</tr>
 				</thead>
+				<tbody>
+					<% categories.forEach(category => { %>
+						<tr>
+							<th><%=category.id%></th>
+							<th><%=category.title%></th>
+							<th><%=category.slug%></th>
+						</tr>
+					<% }) %> 
+				</tbody>
 			</table>
 		</div>
 		<%- include ('../../partials/footer.ejs') %>
