@@ -24,11 +24,10 @@
 							<th><%=category.slug%></th>
 							<th>
 								<button class="btn btn-warning">Editar</button>
-								<form action="/categories/delete" method="post" style="display: inline;">
+								<form action="/categories/delete" method="post" style="display: inline;" onsubmit="confirmDelete(event, this)">
 									<input type="hidden" name="id" value="<%= category.id %>">
 									<button class="btn btn-danger">Excluir</button>
 								</form>
-								
 							</th>
 						</tr>
 					<% }) %> 
@@ -36,3 +35,15 @@
 			</table>
 		</div>
 		<%- include ('../../partials/footer.ejs') %>
+
+		<script>
+			const confirmDelete = (event, form) => {
+				event.preventDefault();
+
+				let decision = confirm('Tem certeza que deseja excluir a categoria selecionada');
+
+				if(decision) {
+					form.submit();
+				}
+			}
+		</script>
