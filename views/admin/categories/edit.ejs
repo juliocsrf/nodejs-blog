@@ -8,9 +8,10 @@
 					<h2>Editar categoria</h2>
 				</div>
 				<div class="card-body">
-					<form method="POST" action="/categories/edit">
-						<input type="text" name="title" placeholder="Defina o título da categoria" value="<%=category.title%>"
-							class="form-control" /><br>
+					<form method="POST" action="/categories/update">
+						<input type="text" name="title" placeholder="Defina o título da categoria"
+							value="<%=category.title%>" class="form-control" /><br>
+						<input type="hidden" name="id" value="<%=category.id%>">
 						<button class="btn btn-success">Salvar</button>
 					</form>
 				</div>
