@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 	Article.findAll({
 		order: [['id', 'desc']]
 	}).then((articles) => {
-		Category.findAll().then((categories)=>{
+		Category.findAll().then((categories) => {
 			res.render('index', { articles, categories })
 		});
 	});
@@ -44,13 +44,31 @@ app.get('/:slug', (req, res) => {
 		where: { slug }
 	}).then(article => {
 		if (article != undefined) {
-			Category.findAll().then((categories)=>{
+			Category.findAll().then((categories) => {
 				res.render('article', { article, categories })
 			});
 		} else {
 			res.redirect('/');
 		}
 	}).catch(error => {
+		res.redirect('/');
+	});
+});
+
+app.get('/category/:slug', (req, res) => {
+	let slug = req.params.slug;
+	Category.findOne({
+		where: { slug },
+		include: [{ model: Article }]
+	}).then((category) => {
+		if (category !== undefined) {
+			Category.findAll().then(categories => {
+				res.render('index', { articles: category.articles, categories });
+			})
+		} else {
+			res.redirect('/');
+		}
+	}).catch(err => {
 		res.redirect('/');
 	});
 });
