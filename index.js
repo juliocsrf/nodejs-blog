@@ -17,10 +17,10 @@ app.use(express.json()); // JSON reader
 //Database
 connection
 	.authenticate()
-	.then(()=>{
+	.then(() => {
 		console.log('Database connected');
 	})
-	.catch((error)=>{
+	.catch((error) => {
 		console.log(`Database error: ${error}`)
 	});
 
@@ -29,8 +29,25 @@ app.use('/', articlesController);
 
 //Routes
 app.get('/', (req, res) => {
-	Article.findAll().then((articles)=>{
-		res.render('index', {articles})
+	Article.findAll({
+		order: [['id', 'desc']]
+	}).then((articles) => {
+		res.render('index', { articles })
+	});
+});
+
+app.get('/:slug', (req, res) => {
+	let slug = req.params.slug;
+	Article.findOne({
+		where: { slug }
+	}).then(article => {
+		if (article != undefined) {
+			res.render('article', { article });
+		} else {
+			res.redirect('/');
+		}
+	}).catch(error => {
+		res.redirect('/');
 	});
 });
 
