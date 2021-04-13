@@ -12,7 +12,7 @@ router.post('/categories/save', (req, res) => {
 	if (title != undefined && title != '') {
 		Category.create({
 			title,
-			slug: slugify(title)
+			slug: slugify(title, {lower: true})
 		}).then(() => {
 			res.redirect('/admin/categories');
 		});
@@ -65,7 +65,7 @@ router.get('/admin/categories/edit/:id', (req, res) => {
 router.post('/categories/update', (req, res) => {
 	let id = req.body.id;
 	let title = req.body.title;
-	let slug = slugify(title);
+	let slug = slugify(title, {lower: true});
 
 	Category.update({
 		title, slug
